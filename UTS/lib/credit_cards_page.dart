@@ -209,12 +209,16 @@ class CreditCardsPage extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        // KODE GAMBAR ANDA DI SINI
+        Image.asset(
+          'assets/images/contact_less.png',
+          height: 28,
+          fit: BoxFit.contain,
+        ),
+        Image.asset(
+          'assets/images/mastercard.png',
+          height: 28,
+          fit: BoxFit.contain,
+        ),
       ],
     );
   }
-  // buat Column berisi kontainer dan Informasi
-
-  // buat   FloatingActionButton
-  
-  // Build Column
