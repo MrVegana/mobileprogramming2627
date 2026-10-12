@@ -1,223 +1,145 @@
 import 'package:flutter/material.dart';
 
 class CreditCardsPage extends StatelessWidget {
-  const CreditCardsPage({Key? key}) : super(key: key);
-
+  
   // TODO 1: GANTI VARIABEL INI DENGAN DATA DIRI ANDA
-  final String namaMahasiswa = "JUSTIN CHRISTIAN ADAM";
-  final String nimMahasiswa = "20245520006";
+  final String namaMahasiswa = "Justin Christian Adam"; // Jangan biarkan kosong!
+  final String nimMahasiswa = "20245520006"; // Jangan biarkan kosong!
 
   @override
   Widget build(BuildContext context) {
+    
     // TODO 2: BUAT LOGIKA KONDISIONAL BERDASARKAN NIM!
     // Aturan:
-    // - Jika digit terakhir NIM Anda Ganjil: warnaKartu1 = Biru (0xFF0B1033)
-    // - Jika digit terakhir NIM Anda Genap: warnaKartu1 = Hitam (0xFF000000)
-    int digitTerakhir = int.parse(nimMahasiswa[nimMahasiswa.length - 1]);
-    Color warnaKartu1 = (digitTerakhir % 2 != 0)
-        ? const Color(0xFF0B1033)
-        : const Color(0xFF000000);
+    // - Jika digit terakhir NIM Anda Ganjil: warnaKartu1 = Biru (0xFF090943), warnaKartu2 = Merah.
+    // - Jika digit terakhir NIM Anda Genap: warnaKartu1 = Hitam (0xFF000000), warnaKartu2 = Hijau.
+    // (Silakan tulis kode logika if-else Anda di sini sebelum return)
+    
+    Color warnaKartu1;
+    Color warnaKartu2;
 
-    return Scaffold(
-      backgroundColor: const Color(0xFFF9F9FB),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24.0),
-          child: Container(
-            width: double.infinity,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // TODO 3: Implementasikan UI untuk judul dan sub-judul
-                _buildTitleSection(
-                  title: 'Rincian pembayaran',
-                  subTitle: 'Bagaimana Anda ingin membayar?',
-                ),
-                const SizedBox(height: 24),
+    // Mengambil digit terakhir dari NIM (Angka 6 dari 20245520006 -> Genap)
+    int lastDigit = int.parse(nimMahasiswa[nimMahasiswa.length - 1]);
 
-                // TODO 4: Bangun UI kartu kredit di sini
-                // Kartu Pertama (Warna sesuai logika NIM)
-                _buildCreditCard(
-                  color: warnaKartu1,
-                  cardNumber: '3546 7532 XXXX 9742',
-                  cardHolder: namaMahasiswa,
-                  cardExpiration: '08/2022',
-                ),
-                const SizedBox(height: 16),
+    if (lastDigit % 2 != 0) {
+      // NIM Ganjil
+      warnaKartu1 = const Color(0xFF090943);
+      warnaKartu2 = Colors.red;
+    } else {
+      // NIM Genap (NIM 20245520006 berakhir angka 6 -> Genap)
+      warnaKartu1 = const Color(0xFF000000);
+      warnaKartu2 = Colors.green;
+    }
 
-                // Kartu Kedua
-                _buildCreditCard(
-                  color: const Color(0xFF000000),
-                  cardNumber: '9874 4785 XXXX 6548',
-                  cardHolder: namaMahasiswa,
-                  cardExpiration: '05/2024',
-                ),
-                const SizedBox(height: 24),
-
-                // Tombol Tambah Kartu
-                Center(
-                  child: _buildAddCardButton(
-                    icon: const Icon(
-                      Icons.add,
-                      color: Colors.white,
-                      size: 24,
-                    ),
-                    color: Colors.black,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  // =========================================================================
-  // PERINGATAN: DILARANG MENGUBAH NAMA FUNGSI DAN PARAMETER DI BAWAH INI
-  // =========================================================================
-
-  // TODO 3: Implementasikan UI untuk judul dan sub-judul di sini
-  Column _buildTitleSection({
-    required String title,
-    required String subTitle,
-  }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: const TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF222222),
-          ),
-        ),
-        const SizedBox(height: 6),
-        Text(
-          subTitle,
-          style: const TextStyle(
-            fontSize: 14,
-            color: Colors.grey,
-          ),
-        ),
-      ],
-    );
-  }
-
-  // TODO 4: Implementasikan UI Kartu Kredit
-  Card _buildCreditCard({
-    required Color color,
-    required String cardNumber,
-    required String cardHolder,
-    required String cardExpiration,
-  }) {
-    return Card(
-      elevation: 4,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
-      color: color,
+    return SingleChildScrollView(
       child: Container(
-        padding: const EdgeInsets.all(20),
-        width: double.infinity,
-        height: 200,
+        padding: const EdgeInsets.all(8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            _buildLogosBlock(),
-            Text(
-              cardNumber,
-              style: const TextStyle(
-                fontFamily: 'CourierPrime',
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-                letterSpacing: 1.5,
-              ),
+          children: <Widget>[
+            _buildTitleSection(
+                title: "Rincian pembayaran",
+                subTitle: "Bagaimana Anda ingin membayar?"),
+            
+            _buildCreditCard(
+                color: warnaKartu1, 
+                cardExpiration: "08/2026",
+                cardHolder: namaMahasiswa, // Menggunakan variabel nama
+                cardNumber: nimMahasiswa), // Menggunakan variabel NIM
+            
+            const SizedBox(
+              height: 15,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _buildDetailsBlock(
-                  label: 'CARDHOLDER',
-                  value: cardHolder,
-                ),
-                _buildDetailsBlock(
-                  label: 'VALID THRU',
-                  value: cardExpiration,
-                ),
-              ],
-            ),
+            
+            _buildCreditCard(
+                color: warnaKartu2,
+                cardExpiration: "05/2027",
+                cardHolder: namaMahasiswa,
+                cardNumber: "9874 4785 XXXX 6548"),
+            
+            _buildAddCardButton(
+              icon: const Icon(Icons.add),
+              color: const Color(0xFF081603),
+            )
           ],
         ),
       ),
     );
   }
 
-  // TODO 5: Panggil asset gambar lokal "contact_less.png" dan "mastercard.png"
-  Row _buildLogosBlock() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Image.asset(
-          'assets/images/contact_less.png',
-          height: 28,
-          fit: BoxFit.contain,
-        ),
-        Image.asset(
-          'assets/images/mastercard.png',
-          height: 28,
-          fit: BoxFit.contain,
-        ),
-      ],
-    );
-  }
+  // ===========================================================================
+  // PERINGATAN: DILARANG MENGUBAH NAMA FUNGSI DAN PARAMETER DI BAWAH INI!
+  // JIKA ANDA MENGGUNAKAN AI GENERATOR SEPENUHNYA, STRUKTUR INI BIASANYA AKAN RUSAK.
+  // ===========================================================================
 
-  // Implementasikan Details Block
-  Column _buildDetailsBlock({
-    required String label,
-    required String value,
-  }) {
+  // Build the title section
+  Column _buildTitleSection({required String title, required String subTitle}) {
+    // TODO 3: Implementasikan UI untuk judul dan sub-judul di sini.
+    // Terapkan TextStyle dengan font yang sesuai panduan.
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: const TextStyle(
-            fontSize: 9,
-            fontWeight: FontWeight.bold,
-            color: Colors.grey,
-            letterSpacing: 0.8,
+      children: <Widget>[
+        // padding 1 
+        Padding(
+          padding: const EdgeInsets.only(bottom: 6.0),
+          child: Text(
+            title,
+            style: const TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF222222),
+            ),
           ),
         ),
-        const SizedBox(height: 2),
-        Text(
-          value,
-          style: const TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
+        // padding 2
+        Padding(
+          padding: const EdgeInsets.only(bottom: 16.0),
+          child: Text(
+            subTitle,
+            style: const TextStyle(
+              fontSize: 14,
+              color: Colors.grey,
+            ),
           ),
         ),
       ],
     );
   }
 
-  // Implementasikan Tombol Tambah Kartu
-  Container _buildAddCardButton({
-    required Icon icon,
-    required Color color,
-  }) {
-    return Container(
-      width: 48,
-      height: 48,
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(12),
+  // Build the credit card widget
+  Card _buildCreditCard({ 
+      required Color color,
+      required String cardNumber,
+      required String cardHolder,
+      required String cardExpiration }) {
+    
+    // TODO 4: Bangun UI kartu kredit di sini.
+    // Wajib memanggil fungsi _buildLogosBlock() dan _buildDetailsBlock() di dalamnya.
+    return Card(
+      color: color,
+      child: Container(
+        height: 200,
+        // KODE UI ANDA DI SINI
+        child: const Center(child: Text("UI Kartu belum dibuat...")),
       ),
-      child: Center(child: icon),
     );
   }
-}
+
+  // buat  top row containing logo
+  Row _buildLogosBlock() {
+    // TODO 5: Panggil asset gambar lokal "contact_less.png" dan "mastercard.png".
+    // CATATAN: Atur posisi sejajar berlawanan (kiri dan kanan). 
+    // AI teks tidak tahu dimensi resolusi asli gambar ini. Anda harus mengatur nilai width dan height 
+    // secara manual agar gambar tidak pecah atau overflow (terpotong).
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        // KODE GAMBAR ANDA DI SINI
+      ],
+    );
+  }
+  // buat Column berisi kontainer dan Informasi
+
+  // buat   FloatingActionButton
+  
+  // Build Column
