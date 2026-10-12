@@ -116,11 +116,86 @@ class CreditCardsPage extends StatelessWidget {
     // TODO 4: Bangun UI kartu kredit di sini.
     // Wajib memanggil fungsi _buildLogosBlock() dan _buildDetailsBlock() di dalamnya.
     return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
       color: color,
       child: Container(
         height: 200,
-        // KODE UI ANDA DI SINI
-        child: const Center(child: Text("UI Kartu belum dibuat...")),
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            _buildLogosBlock(),
+            Text(
+              cardNumber,
+              style: const TextStyle(
+                fontFamily: 'CourierPrime',
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+                letterSpacing: 1.5,
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                _buildDetailsBlock(
+                  label: 'CARDHOLDER',
+                  value: cardHolder,
+                ),
+                _buildDetailsBlock(
+                  label: 'VALID THRU',
+                  value: cardExpiration,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Column berisi kontainer dan Informasi (Details Block)
+  Column _buildDetailsBlock({required String label, required String value}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: 9,
+            fontWeight: FontWeight.bold,
+            color: Colors.grey,
+            letterSpacing: 0.8,
+          ),
+        ),
+        const SizedBox(height: 2),
+        Text(
+          value,
+          style: const TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+      ],
+    );
+  }
+
+  // FloatingActionButton / AddCardButton
+  Widget _buildAddCardButton({required Icon icon, required Color color}) {
+    return Center(
+      child: Container(
+        width: 48,
+        height: 48,
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Center(child: icon),
       ),
     );
   }
